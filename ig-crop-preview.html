@@ -156,10 +156,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2px;
   }
-  .profile-grid-wrap .crop-window { aspect-ratio: 1 / 1; }
+  .profile-grid-wrap .crop-window { aspect-ratio: 3 / 4; }
   .profile-grid-wrap .ghost {
     background: #1a1a1c;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 4;
   }
 
   footer {
@@ -200,7 +200,7 @@ const FORMATS = [
   { id: 'portrait',  name: 'Feed – Portrait',   ratio: 4/5,     desc: '1080 × 1350 (4:5)' },
   { id: 'square',    name: 'Feed – Square',     ratio: 1,       desc: '1080 × 1080 (1:1)' },
   { id: 'landscape', name: 'Feed – Landscape',  ratio: 1.91,    desc: '1080 × 566 (1.91:1)' },
-  { id: 'profile',   name: 'Profile Grid',      ratio: 1,       desc: 'Miniatura 1:1', gridPreview: true },
+  { id: 'profile',   name: 'Profile Grid',      ratio: 3/4,     desc: '1015 × 1350 (3:4)', gridPreview: true },
   { id: 'story',     name: 'Story / Reel',      ratio: 9/16,    desc: '1080 × 1920 (9:16)' },
 ];
 
