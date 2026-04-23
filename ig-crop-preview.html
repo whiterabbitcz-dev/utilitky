@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Crop Preview</title>
+<style>
+  :root {
+    --bg: #0f0f10;
+    --panel: #1a1a1c;
+    --panel-2: #232326;
+    --border: #2e2e32;
+    --text: #ececec;
+    --muted: #9a9aa0;
+    --accent: #ff3b6b;
+    --accent-2: #833ab4;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+  }
+  header {
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .actions { display: flex; gap: 12px; align-items: center; }
+  button, label.btn {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button:hover, label.btn:hover { background: #2e2e32; }
+  button.primary {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border: none;
+  }
+  button.primary:hover { filter: brightness(1.1); }
+  main { padding: 24px 32px; }
+  .dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 24px;
+    transition: all 0.15s;
+  }
+  .dropzone.dragover {
+    border-color: var(--accent);
+    background: rgba(255, 59, 107, 0.05);
+  }
+  .dropzone p { margin: 8px 0; }
+  .dropzone .big { font-size: 16px; color: var(--text); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-head {
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-title { font-size: 13px; font-weight: 600; }
+  .card-sub { font-size: 11px; color: var(--muted); }
+  .crop-window {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    user-select: none;
+    touch-action: none;
+    cursor: grab;
+  }
+  .crop-window:active { cursor: grabbing; }
+  .crop-window img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+    max-width: none;
+  }
+  .crop-window.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .card-foot {
+    padding: 10px 14px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .zoom {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .zoom input[type=range] {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+  .card-btns { display: flex; gap: 6px; }
+  .card-btns button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  /* Profile grid special preview */
+  .profile-grid-wrap {
+    background: #000;
+    padding: 2px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+  .profile-grid-wrap .crop-window { aspect-ratio: 1 / 1; }
+  .profile-grid-wrap .ghost {
+    background: #1a1a1c;
+    aspect-ratio: 1 / 1;
+  }
+
+  footer {
+    padding: 24px 32px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Instagram Crop Preview</h1>
+  <div class="actions">
+    <label class="btn" for="fileInput">Načíst fotku</label>
+    <input type="file" id="fileInput" accept="image/*" class="hidden">
+    <button id="resetAllBtn">Vycentrovat vše</button>
+  </div>
+</header>
+
+<main>
+  <div id="dropzone" class="dropzone">
+    <p class="big">Přetáhni sem fotku</p>
+    <p>nebo klikni na „Načíst fotku"</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  Táhni uvnitř náhledu myší, zoomuj scrollem nebo posuvníkem. Ořezy posouvá přesně podle prostoru, který v daném formátu má.
+</footer>
+
+<script>
+const FORMATS = [
+  { id: 'portrait',  name: 'Feed – Portrait',   ratio: 4/5,     desc: '1080 × 1350 (4:5)' },
+  { id: 'square',    name: 'Feed – Square',     ratio: 1,       desc: '1080 × 1080 (1:1)' },
+  { id: 'landscape', name: 'Feed – Landscape',  ratio: 1.91,    desc: '1080 × 566 (1.91:1)' },
+  { id: 'profile',   name: 'Profile Grid',      ratio: 1,       desc: 'Miniatura 1:1', gridPreview: true },
+  { id: 'story',     name: 'Story / Reel',      ratio: 9/16,    desc: '1080 × 1920 (9:16)' },
+];
+
+const state = {
+  image: null,        // HTMLImageElement
+  imageUrl: null,
+  cards: [],          // { format, img, window, offsetX, offsetY, scale, render }
+};
+
+const grid = document.getElementById('grid');
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const resetAllBtn = document.getElementById('resetAllBtn');
+
+function buildCards() {
+  grid.innerHTML = '';
+  state.cards = [];
+  FORMATS.forEach(fmt => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-head">
+        <div>
+          <div class="card-title">${fmt.name}</div>
+          <div class="card-sub">${fmt.desc}</div>
+        </div>
+      </div>
+      ${fmt.gridPreview ? `
+        <div class="profile-grid-wrap">
+          <div class="ghost"></div>
+          <div class="ghost"></div>
+          <div class="ghost"></div>
+          <div class="ghost"></div>
+          <div class="crop-window" style="aspect-ratio: ${fmt.ratio}"></div>
+          <div class="ghost"></div>
+          <div class="ghost"></div>
+          <div class="ghost"></div>
+          <div class="ghost"></div>
+        </div>
+      ` : `
+        <div class="crop-window" style="aspect-ratio: ${fmt.ratio}"></div>
+      `}
+      <div class="card-foot">
+        <div class="zoom">
+          <span>Zoom</span>
+          <input type="range" min="100" max="300" value="100" step="1" data-role="zoom">
+          <span data-role="zoom-val">100%</span>
+        </div>
+        <div class="card-btns">
+          <button data-role="center">Centrovat</button>
+          <button data-role="download">Stáhnout</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    const cropWindow = card.querySelector('.crop-window');
+    cropWindow.classList.add('empty');
+    cropWindow.textContent = 'Nahraj fotku';
+
+    const ctx = {
+      format: fmt,
+      card,
+      cropWindow,
+      img: null,
+      offsetX: 0, // in image pixel coordinates, top-left of visible area
+      offsetY: 0,
+      scaleZoom: 1, // user zoom multiplier on top of cover-scale
+    };
+    state.cards.push(ctx);
+
+    card.querySelector('[data-role=center]').addEventListener('click', () => {
+      centerCard(ctx);
+    });
+    card.querySelector('[data-role=download]').addEventListener('click', () => {
+      downloadCard(ctx);
+    });
+    const zoom = card.querySelector('[data-role=zoom]');
+    const zoomVal = card.querySelector('[data-role=zoom-val]');
+    zoom.addEventListener('input', () => {
+      const z = parseInt(zoom.value, 10) / 100;
+      setZoom(ctx, z);
+      zoomVal.textContent = Math.round(z * 100) + '%';
+    });
+    ctx.zoomEl = zoom;
+    ctx.zoomValEl = zoomVal;
+
+    bindDrag(ctx);
+    bindWheel(ctx);
+  });
+}
+
+function loadImage(src) {
+  const img = new Image();
+  img.onload = () => {
+    state.image = img;
+    state.imageUrl = src;
+    dropzone.classList.add('hidden');
+    state.cards.forEach(ctx => attachImage(ctx));
+  };
+  img.src = src;
+}
+
+function attachImage(ctx) {
+  // Put a fresh <img> inside the crop window
+  ctx.cropWindow.classList.remove('empty');
+  ctx.cropWindow.textContent = '';
+  const el = document.createElement('img');
+  el.src = state.imageUrl;
+  el.draggable = false;
+  ctx.cropWindow.appendChild(el);
+  ctx.img = el;
+  centerCard(ctx);
+}
+
+// Compute the scale that makes the image "cover" the crop window at zoom=1
+function coverScale(ctx) {
+  const rect = ctx.cropWindow.getBoundingClientRect();
+  const iw = state.image.naturalWidth;
+  const ih = state.image.naturalHeight;
+  return Math.max(rect.width / iw, rect.height / ih);
+}
+
+function effectiveScale(ctx) {
+  return coverScale(ctx) * ctx.scaleZoom;
+}
+
+function clampOffsets(ctx) {
+  const rect = ctx.cropWindow.getBoundingClientRect();
+  const s = effectiveScale(ctx);
+  const imgW = state.image.naturalWidth * s;
+  const imgH = state.image.naturalHeight * s;
+  // offset is in screen-space pixels of the top-left of image relative to crop window
+  // Constrain so image always covers window (no empty space)
+  const minX = rect.width - imgW;
+  const minY = rect.height - imgH;
+  const maxX = 0;
+  const maxY = 0;
+  ctx.offsetX = Math.max(minX, Math.min(maxX, ctx.offsetX));
+  ctx.offsetY = Math.max(minY, Math.min(maxY, ctx.offsetY));
+}
+
+function render(ctx) {
+  if (!ctx.img || !state.image) return;
+  clampOffsets(ctx);
+  const s = effectiveScale(ctx);
+  ctx.img.style.transform = `translate(${ctx.offsetX}px, ${ctx.offsetY}px) scale(${s})`;
+}
+
+function centerCard(ctx) {
+  if (!state.image) return;
+  ctx.scaleZoom = 1;
+  if (ctx.zoomEl) { ctx.zoomEl.value = 100; ctx.zoomValEl.textContent = '100%'; }
+  const rect = ctx.cropWindow.getBoundingClientRect();
+  const s = effectiveScale(ctx);
+  const imgW = state.image.naturalWidth * s;
+  const imgH = state.image.naturalHeight * s;
+  ctx.offsetX = (rect.width - imgW) / 2;
+  ctx.offsetY = (rect.height - imgH) / 2;
+  render(ctx);
+}
+
+function setZoom(ctx, newZoom) {
+  if (!state.image) return;
+  const rect = ctx.cropWindow.getBoundingClientRect();
+  const cx = rect.width / 2;
+  const cy = rect.height / 2;
+  const oldS = effectiveScale(ctx);
+  ctx.scaleZoom = newZoom;
+  const newS = effectiveScale(ctx);
+  const ratio = newS / oldS;
+  // keep point under center stable
+  ctx.offsetX = cx - (cx - ctx.offsetX) * ratio;
+  ctx.offsetY = cy - (cy - ctx.offsetY) * ratio;
+  render(ctx);
+}
+
+function bindDrag(ctx) {
+  let dragging = false;
+  let startX, startY, startOffX, startOffY;
+  ctx.cropWindow.addEventListener('pointerdown', (e) => {
+    if (!state.image) return;
+    dragging = true;
+    ctx.cropWindow.setPointerCapture(e.pointerId);
+    startX = e.clientX; startY = e.clientY;
+    startOffX = ctx.offsetX; startOffY = ctx.offsetY;
+  });
+  ctx.cropWindow.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    ctx.offsetX = startOffX + (e.clientX - startX);
+    ctx.offsetY = startOffY + (e.clientY - startY);
+    render(ctx);
+  });
+  const end = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    try { ctx.cropWindow.releasePointerCapture(e.pointerId); } catch(_){}
+  };
+  ctx.cropWindow.addEventListener('pointerup', end);
+  ctx.cropWindow.addEventListener('pointercancel', end);
+}
+
+function bindWheel(ctx) {
+  ctx.cropWindow.addEventListener('wheel', (e) => {
+    if (!state.image) return;
+    e.preventDefault();
+    const delta = -e.deltaY * 0.002;
+    const newZoom = Math.max(1, Math.min(3, ctx.scaleZoom * (1 + delta)));
+    setZoom(ctx, newZoom);
+    if (ctx.zoomEl) {
+      ctx.zoomEl.value = Math.round(newZoom * 100);
+      ctx.zoomValEl.textContent = Math.round(newZoom * 100) + '%';
+    }
+  }, { passive: false });
+}
+
+function downloadCard(ctx) {
+  if (!state.image) return;
+  const rect = ctx.cropWindow.getBoundingClientRect();
+  // Target output size — use format-appropriate dimensions
+  const TARGET_LONG = 1350;
+  let outW, outH;
+  if (ctx.format.ratio >= 1) {
+    outW = Math.round(TARGET_LONG);
+    outH = Math.round(TARGET_LONG / ctx.format.ratio);
+  } else {
+    outH = Math.round(TARGET_LONG);
+    outW = Math.round(TARGET_LONG * ctx.format.ratio);
+  }
+  // Map: in screen coords, we draw image at (offsetX, offsetY) with scale s on a rect of (rect.width, rect.height)
+  // Source rectangle in image pixels:
+  const s = effectiveScale(ctx);
+  const srcX = -ctx.offsetX / s;
+  const srcY = -ctx.offsetY / s;
+  const srcW = rect.width / s;
+  const srcH = rect.height / s;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = outH;
+  const c = canvas.getContext('2d');
+  c.fillStyle = '#000';
+  c.fillRect(0, 0, outW, outH);
+  c.drawImage(state.image, srcX, srcY, srcW, srcH, 0, 0, outW, outH);
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ig-${ctx.format.id}.jpg`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, 'image/jpeg', 0.95);
+}
+
+// ---- File input & drop ----
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) readFile(file);
+});
+
+['dragenter', 'dragover'].forEach(ev => {
+  dropzone.addEventListener(ev, (e) => {
+    e.preventDefault();
+    dropzone.classList.add('dragover');
+  });
+});
+['dragleave', 'drop'].forEach(ev => {
+  dropzone.addEventListener(ev, (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+  });
+});
+dropzone.addEventListener('drop', (e) => {
+  const file = e.dataTransfer.files[0];
+  if (file) readFile(file);
+});
+// allow drop anywhere once an image is loaded
+document.body.addEventListener('dragover', (e) => e.preventDefault());
+document.body.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (file) readFile(file);
+});
+
+function readFile(file) {
+  if (!file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = (e) => loadImage(e.target.result);
+  reader.readAsDataURL(file);
+}
+
+resetAllBtn.addEventListener('click', () => {
+  state.cards.forEach(centerCard);
+});
+
+window.addEventListener('resize', () => {
+  state.cards.forEach(ctx => {
+    if (ctx.img) render(ctx);
+  });
+});
+
+buildCards();
+</script>
+</body>
+</html>
