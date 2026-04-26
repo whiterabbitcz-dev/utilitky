@@ -10,6 +10,17 @@ type ChangelogEntry = {
 const entries: ChangelogEntry[] = [
   {
     date: "27. dubna 2026",
+    version: "0.4.0",
+    title: "IG crop preview",
+    bullets: [
+      "Druhý živý nástroj. Nahraj fotku a hned vidíš všech 5 IG formátů: feed portrét, čtverec, na šířku, profil v gridu a story.",
+      "Každý náhled má vlastní ořez. Posouvej myší nebo prstem, zoomuj kolečkem nebo posuvníkem.",
+      "Profil v gridu se ukazuje jako 3×3 mřížka s ghost dlaždicemi (poměr 3:4 podle IG 2025).",
+      "Stažení po kartě ve cílovém rozlišení (long side 1350 px, JPG kvalita 95).",
+    ],
+  },
+  {
+    date: "27. dubna 2026",
     version: "0.3.0",
     title: "Titulkovač videa",
     bullets: [

@@ -303,7 +303,7 @@ def main() -> int:
         log.error(f"Not a file: {args.input}")
         return 2
     if args.input.suffix.lower() not in VALID_EXTS:
-        log.warning(f"Unusual file extension {args.input.suffix}, trying anyway")
+        log.warning(f"Unusual file extension {args.input.suffix} — trying anyway")
 
     output_path = args.input.with_suffix(".srt")
 
@@ -328,7 +328,7 @@ def main() -> int:
     t0 = time.time()
 
     log.info(f"Loading Whisper model '{args.model}' on {device}/{compute_type} (VAD: silero)")
-    log.info("First run downloads ~3 GB to ~/.cache. Please wait.")
+    log.info("First run downloads ~3 GB to ~/.cache — please wait")
     model = whisperx.load_model(
         args.model,
         device,

@@ -12,11 +12,11 @@ $ ./transcribe.sh ~/videos/rozhovor.mp4
 - Transkribuje [WhisperX](https://github.com/m-bain/whisperX), model `large-v2` (pro češtinu lepší než `large-v3`).
 - Word-level timestampy přes alignment model `comodoro/wav2vec2-xls-r-300m-cs-250`.
 - SRT segmenty cca po větách, max ~5 s na cue (kratší cue lépe fungují s Word Highlight).
-- Čísla v textu (`2026`, `13:30`) převede do slovní formy *před* alignmentem. Wav2vec2 jinak digity neumí přiřadit timestamp.
+- Čísla v textu (`2026`, `13:30`) převede do slovní formy *před* alignmentem — wav2vec2 jinak digity neumí přiřadit timestamp.
 
 ## Požadavky
 
-- **Python 3.11**. Uv si ho stáhne sám, neřeš.
+- **Python 3.11** — uv si ho stáhne sám, neřeš.
 - [`uv`](https://github.com/astral-sh/uv)
 - `ffmpeg` v `PATH`
 
@@ -55,12 +55,12 @@ První `uv sync` stáhne PyTorch (~500 MB na macOS, ~2,5 GB na Linux/Windows s C
 ```
 
 Volitelné argumenty:
-- `--model large-v3`: pokud chceš zkusit novější (default `large-v2`)
-- `--language en`: jiný jazyk (default `cs`)
-- `--max-segment-seconds 4`: kratší cue, agresivnější dělení
-- `--max-line-chars 42`: znaků na řádek (wrap na max 2 řádky)
-- `--max-words-per-cue 4`: cue po N slovech (TikTok/Reels styl, 0 = bez limitu)
-- `--gap-fill 2.0`: prodluž cue.end k dalšímu cue.start, je-li mezera kratší (zabrání blikání)
+- `--model large-v3` — pokud chceš zkusit novější (default `large-v2`)
+- `--language en` — jiný jazyk (default `cs`)
+- `--max-segment-seconds 4` — kratší cue, agresivnější dělení
+- `--max-line-chars 42` — znaků na řádek (wrap na max 2 řádky)
+- `--max-words-per-cue 4` — cue po N slovech (TikTok/Reels styl, 0 = bez limitu)
+- `--gap-fill 2.0` — prodluž cue.end k dalšímu cue.start, je-li mezera kratší (zabrání blikání)
 
 Windows:
 ```
@@ -87,7 +87,7 @@ Na M1/M2/M3 očekávej cca **realtime ratio 2–4×** (10 min audia = 2–5 min 
 4. Přetáhni na *header* subtitle tracku (ne na jednotlivý cue).
 5. Word-level zvýraznění by mělo sednout na mluvený zvuk s odchylkou ±100 ms.
 
-Pokud zvýraznění "prokluzuje" o slovo: zkontroluj log z `transcribe.sh`, jestli neoznámil **„Numbers that may not align cleanly"**. Wav2vec2 nedokáže alignovat zbytkové digity. Buď přepiš ručně v SRT, nebo nahraď v transkripci slovní formou a re-align.
+Pokud zvýraznění "prokluzuje" o slovo: zkontroluj log z `transcribe.sh`, jestli neoznámil **„Numbers that may not align cleanly"** — wav2vec2 nedokáže alignovat zbytkové digity. Buď přepiš ručně v SRT, nebo nahraď v transkripci slovní formou a re-align.
 
 ## Reset cache
 
@@ -117,7 +117,7 @@ rm -rf ~/.cache/huggingface ~/.cache/torch
 
 ## Mimo scope
 
-- Diarizace (kdo mluví). Pro monolog netřeba.
-- Burn-in titulků. To udělá Resolve při exportu.
-- Překlad. Pouze CZ na CZ.
+- Diarizace (kdo mluví) — pro monolog netřeba.
+- Burn-in titulků — to udělá Resolve při exportu.
+- Překlad — pouze CZ → CZ.
 - GUI.

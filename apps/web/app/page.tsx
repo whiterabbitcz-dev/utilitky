@@ -16,6 +16,13 @@ const tools: Array<{
     status: "live",
   },
   {
+    href: "/ig-crop-preview",
+    title: "IG crop preview",
+    description:
+      "Nahraj fotku a uvidíš ji ve všech IG formátech najednou. Posouvej, zoomuj, stahuj.",
+    status: "live",
+  },
+  {
     href: "https://github.com/whiterabbitcz-dev/utilitky/tree/main/tools/whisperx-cz",
     title: "Titulkovač videa",
     description: "Video do SRT s word-level timingem pro DaVinci Resolve.",
