@@ -5,17 +5,21 @@ type ToolCardProps = {
   href: string
   title: string
   description: string
-  status?: "live" | "soon" | "beta"
+  status?: "live" | "soon" | "beta" | "cli"
 }
 
 const statusLabels: Record<NonNullable<ToolCardProps["status"]>, string> = {
   live: "ŽIVĚ",
   soon: "BRZY",
   beta: "BETA",
+  cli: "CLI",
 }
+
+const isExternal = (href: string) => /^(https?:)?\/\//.test(href)
 
 export function ToolCard({ href, title, description, status }: ToolCardProps) {
   const isSoon = status === "soon"
+  const external = isExternal(href)
 
   const content = (
     <>
@@ -45,6 +49,19 @@ export function ToolCard({ href, title, description, status }: ToolCardProps) {
       <div className={baseClasses} aria-disabled="true">
         {content}
       </div>
+    )
+  }
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={baseClasses}
+      >
+        {content}
+      </a>
     )
   }
 

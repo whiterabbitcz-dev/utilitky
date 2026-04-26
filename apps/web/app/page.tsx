@@ -7,13 +7,19 @@ const tools: Array<{
   href: string
   title: string
   description: string
-  status: "live" | "soon" | "beta"
+  status: "live" | "soon" | "beta" | "cli"
 }> = [
   {
     href: "/story-safe-zone",
     title: "Story safe zone",
     description: "Vidíš co ti zakryje IG UI.",
     status: "live",
+  },
+  {
+    href: "https://github.com/whiterabbitcz-dev/utilitky/tree/main/tools/whisperx-cz",
+    title: "Titulkovač videa",
+    description: "Video do SRT s word-level timingem pro DaVinci Resolve.",
+    status: "cli",
   },
   {
     href: "/multi-format-exporter",
@@ -48,7 +54,10 @@ const tools: Array<{
 ]
 
 const liveTools = tools.filter((tool) => tool.status === "live")
-const soonTools = tools.filter((tool) => tool.status !== "live")
+const cliTools = tools.filter((tool) => tool.status === "cli")
+const soonTools = tools.filter(
+  (tool) => tool.status !== "live" && tool.status !== "cli",
+)
 
 export default function HomePage() {
   return (
@@ -100,6 +109,25 @@ export default function HomePage() {
                 </p>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {liveTools.map((tool) => (
+                    <ToolCard
+                      key={tool.title}
+                      href={tool.href}
+                      title={tool.title}
+                      description={tool.description}
+                      status={tool.status}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {cliTools.length > 0 ? (
+              <div>
+                <p className="mb-6 text-[0.75rem] font-bold tracking-caps text-accent">
+                  LOKÁLNĚ
+                </p>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {cliTools.map((tool) => (
                     <ToolCard
                       key={tool.title}
                       href={tool.href}

@@ -9,6 +9,16 @@ type ChangelogEntry = {
 
 const entries: ChangelogEntry[] = [
   {
+    date: "27. dubna 2026",
+    version: "0.3.0",
+    title: "Titulkovač videa",
+    bullets: [
+      "Lokální Python CLI v `tools/whisperx-cz`. Video do SRT s word-level timingem.",
+      "WhisperX large-v2 plus česká alignment přes comodoro/wav2vec2-xls-r-300m-cs-250.",
+      "Připraveno pro DaVinci Resolve Word highlight, TikTok/Reels styl 2 až 4 slova na cue.",
+    ],
+  },
+  {
     date: "26. dubna 2026",
     version: "0.2.0",
     title: "Story safe zone",
