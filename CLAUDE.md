@@ -50,11 +50,15 @@ Typography: Nunito only. Sentence case for all headings. CAPS labels with
 
 These rules come from the White Rabbit cookbook and are enforced on every change.
 
-1. **No em-dashes (`—`, U+2014). Anywhere.** Not in copy, not in comments, not
-   in code strings. Use period, colon, comma, parens, semicolon, or split into
-   two sentences. Before committing, run `grep -rn '—' apps packages docs` and
-   fix every hit. Em-dash is the most visible AI typography tell. We don't ship
-   it.
+1. **No em-dashes (`—`, U+2014) in anything users see.** Applies to all
+   user-facing copy: UI strings, headings, button labels, meta titles and
+   descriptions, marketing pages, changelog entries, error messages. Use
+   period, colon, comma, parens, semicolon, or split into two sentences.
+   Before committing user-facing changes, run `grep -rn '—' apps packages`
+   and fix every hit. Em-dash is the most visible AI typography tell. We
+   don't ship it. **Out of scope:** internal docs (handoff specs, READMEs
+   in `docs/`, root-level notes), code comments, and commit messages. Those
+   can use em-dashes freely if it reads better.
 1. **Sentence case for Czech and English headings.** "Story safe zone", not
    "Story Safe Zone". First letter capitalized, rest lowercase except proper
    nouns and brand wordmarks. CAPS labels (NOVÉ, BETA, BRZY ZDE) are a
@@ -94,7 +98,7 @@ See `docs/adding-a-tool.md` for the full checklist. Quick version:
 1. Update landing page tool cards (status from "soon" to "live", set href)
 1. Add changelog entry
 1. Test on real mobile, not just devtools
-1. Run `grep -rn '—'` and check sentence case
+1. Run `grep -rn '—' apps packages` and check sentence case
 1. PR to `dev`, merge to `main`
 
 ## Quality gates before shipping any change
@@ -102,7 +106,7 @@ See `docs/adding-a-tool.md` for the full checklist. Quick version:
 - `pnpm dev` runs without errors
 - `pnpm build` completes
 - TypeScript strict mode passes
-- `grep -rn '—' apps packages docs` returns zero
+- `grep -rn '—' apps packages` returns zero (em-dashes only banned in user-facing code, see rule 1)
 - Mobile responsive at 375px, 768px, 1280px tested
 - All Czech diacritics render correctly
 - No console errors in browser
