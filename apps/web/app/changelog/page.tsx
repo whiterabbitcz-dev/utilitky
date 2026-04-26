@@ -10,6 +10,16 @@ type ChangelogEntry = {
 const entries: ChangelogEntry[] = [
   {
     date: "26. dubna 2026",
+    version: "0.2.0",
+    title: "Story safe zone",
+    bullets: [
+      "První živý nástroj. Nahraj 9:16 obrázek a vidíš, kam ti IG sáhne.",
+      "Tři pohledy: Story, Story s odpovědí, Reels.",
+      "Stažení anotovaného PNG s vyznačenými zónami.",
+    ],
+  },
+  {
+    date: "26. dubna 2026",
     version: "0.1.0",
     title: "Začínáme",
     bullets: [

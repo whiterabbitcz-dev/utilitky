@@ -13,7 +13,7 @@ const tools: Array<{
     href: "/story-safe-zone",
     title: "Story safe zone",
     description: "Vidíš co ti zakryje IG UI.",
-    status: "soon",
+    status: "live",
   },
   {
     href: "/multi-format-exporter",
@@ -46,6 +46,9 @@ const tools: Array<{
     status: "soon",
   },
 ]
+
+const liveTools = tools.filter((tool) => tool.status === "live")
+const soonTools = tools.filter((tool) => tool.status !== "live")
 
 export default function HomePage() {
   return (
@@ -89,21 +92,44 @@ export default function HomePage() {
         </section>
 
         <section className="px-6 pb-20">
-          <div className="mx-auto max-w-[1200px]">
-            <p className="mb-6 text-[0.75rem] font-bold tracking-caps text-gray-400">
-              BRZY ZDE
-            </p>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {tools.map((tool) => (
-                <ToolCard
-                  key={tool.title}
-                  href={tool.href}
-                  title={tool.title}
-                  description={tool.description}
-                  status={tool.status}
-                />
-              ))}
-            </div>
+          <div className="mx-auto max-w-[1200px] space-y-12">
+            {liveTools.length > 0 ? (
+              <div>
+                <p className="mb-6 text-[0.75rem] font-bold tracking-caps text-accent">
+                  ŽIVĚ
+                </p>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {liveTools.map((tool) => (
+                    <ToolCard
+                      key={tool.title}
+                      href={tool.href}
+                      title={tool.title}
+                      description={tool.description}
+                      status={tool.status}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {soonTools.length > 0 ? (
+              <div>
+                <p className="mb-6 text-[0.75rem] font-bold tracking-caps text-gray-400">
+                  BRZY ZDE
+                </p>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {soonTools.map((tool) => (
+                    <ToolCard
+                      key={tool.title}
+                      href={tool.href}
+                      title={tool.title}
+                      description={tool.description}
+                      status={tool.status}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </section>
 
