@@ -12,8 +12,8 @@ export default {
         bg: "#000000",
         card: "#1A1A1A",
         darker: "#0A0A0A",
-        accent: "#00E5FF",
-        "accent-dark": "#0F3D45",
+        accent: "#FFC107",
+        "accent-dark": "#784213",
       },
       fontFamily: {
         sans: ['"Nunito"', "system-ui", "sans-serif"],

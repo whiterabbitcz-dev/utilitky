@@ -1,6 +1,6 @@
-// Brand colors come from White Rabbit cookbook (black + dark cards).
-// Accent for tools is electric cyan (different from WR yellow on the agency site
-// so the agency brand stays distinct from the product sub-brand).
+// Brand colors come from White Rabbit cookbook (black + dark cards + WR yellow).
+// Aligned with the cookbook accent so tools.whiterabbit.cz reads as the same
+// brand as the agency site and client decks.
 
 export const colors = {
   // Backgrounds
@@ -12,9 +12,9 @@ export const colors = {
   white: "#FFFFFF",
   gray: "#888888",
 
-  // Tools accent
-  accent: "#00E5FF",
-  accentDark: "#0F3D45",
+  // WR yellow accent (text on accent fills uses the dark complement)
+  accent: "#FFC107",
+  accentDark: "#784213",
 
   // States
   success: "#10B981",

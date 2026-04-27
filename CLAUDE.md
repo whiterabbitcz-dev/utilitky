@@ -41,7 +41,7 @@ Color palette:
 
 - Background: `#000000`, dark cards `#1A1A1A`, darker `#0A0A0A`
 - Text: white `#FFFFFF`, gray `#888888`
-- Accent: electric cyan `#00E5FF`, dark accent `#0F3D45` (text on accent fills)
+- Accent: WR yellow `#FFC107`, dark accent `#784213` (text on accent fills)
 
 Typography: Nunito only. Sentence case for all headings. CAPS labels with
 `tracking-caps` (0.1em letter-spacing) for micro-tags only.
@@ -68,9 +68,9 @@ These rules come from the White Rabbit cookbook and are enforced on every change
    brand's official logo and materials.
 1. **Czech diacritics required in copy.** Files saved as UTF-8. Don't strip
    háčky and čárky. Nunito has full Czech support via the latin-ext subset.
-1. **Black dominates** (~90% of viewport pixels). Cyan accent is signal,
+1. **Black dominates** (~90% of viewport pixels). Yellow accent is signal,
    not decoration.
-1. **Cyan accent only on**: active states, numbers, CAPS labels, primary CTA
+1. **Yellow accent only on**: active states, numbers, CAPS labels, primary CTA
    buttons, link hover, drop zone hover affordances, card border accents.
 1. **No gradients, decorative lines under titles, generic line icons, stock
    illustrations, or emoji** (unless a specific tool's purpose requires emoji,
@@ -83,11 +83,11 @@ These rules come from the White Rabbit cookbook and are enforced on every change
 - Tool pages use `<ToolShell>` from `apps/web/components/tool-shell.tsx`.
   Required props: `title` (sentence case), `subtitle` (one descriptive
   sentence). Children render as the tool body.
-- Cards use card format A (cyan border-left) for content, card format B
-  (cyan border-top) for media-heavy variants. Don't mix randomly.
-- Drop zones: dashed `#1A1A1A` border at rest, solid cyan border on dragover.
-- Buttons: primary is cyan bg with `#0F3D45` text. Secondary is dark gray bg
-  with white text. Tertiary is text only with cyan on hover.
+- Cards use card format A (yellow border-left) for content, card format B
+  (yellow border-top) for media-heavy variants. Don't mix randomly.
+- Drop zones: dashed `#1A1A1A` border at rest, solid yellow border on dragover.
+- Buttons: primary is yellow bg with `#784213` text. Secondary is dark gray bg
+  with white text. Tertiary is text only with yellow on hover.
 
 ## Adding a new tool
 
