@@ -495,7 +495,7 @@ function CropCard({ format, image, resetKey }: CropCardProps) {
         <button
           type="button"
           onClick={download}
-          className="rounded-md bg-accent px-3 py-1.5 text-[0.75rem] font-bold text-bg transition-colors hover:bg-accent/90"
+          className="rounded-md bg-accent px-3 py-1.5 text-[0.75rem] font-bold text-accent-dark transition-colors hover:bg-accent/90"
         >
           Stáhnout
         </button>
