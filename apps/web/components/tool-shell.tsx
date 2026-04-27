@@ -31,14 +31,20 @@ export function ToolShell({ title, subtitle, children }: ToolShellProps) {
       </header>
 
       <main className="flex-1">
-        <section className="mx-auto max-w-[1200px] px-6 pb-12 pt-20">
+        <section className="mx-auto max-w-[1200px] px-6 pb-10 pt-16">
           <h1
             className="font-bold text-white"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 1.1 }}
+            style={{
+              fontSize: "clamp(2rem, 4vw, 3rem)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
           >
             {title}
           </h1>
-          <p className="mt-3 text-base text-gray-400">{subtitle}</p>
+          <p className="mt-4 max-w-[640px] text-[0.9375rem] leading-[1.5] text-gray-400">
+            {subtitle}
+          </p>
         </section>
 
         <div className="mx-auto max-w-[1200px] px-6">{children}</div>

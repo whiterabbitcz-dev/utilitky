@@ -90,18 +90,22 @@ export default function HomePage() {
       </header>
 
       <main className="flex-1">
-        <section className="px-6 pb-20 pt-24 sm:pt-32">
-          <div className="mx-auto max-w-[800px] text-center">
+        <section className="px-6 pb-20 pt-20 sm:pt-28">
+          <div className="mx-auto max-w-[1200px]">
+            <p className="mb-4 text-[0.6875rem] font-bold uppercase text-gray-400" style={{ letterSpacing: "0.22em" }}>
+              WR &middot; nástroje
+            </p>
             <h1
-              className="font-extrabold text-white"
+              className="font-bold text-white"
               style={{
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
                 lineHeight: 1.05,
+                letterSpacing: "-0.02em",
               }}
             >
-              Nástroje pro lidi co dělají obsah.
+              Nástroje pro lidi co dělají <span className="text-accent">obsah</span>.
             </h1>
-            <p className="mt-6 text-base text-gray-400 sm:text-lg">
+            <p className="mt-5 max-w-[640px] text-[0.9375rem] leading-[1.5] text-gray-400">
               Zdarma. Bez registrace pro základní použití.
             </p>
           </div>
