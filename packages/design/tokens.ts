@@ -22,8 +22,10 @@ export const colors = {
   error: "#EF4444",
 } as const
 
+// Per cookbook: Century Gothic primary, with safe system fallbacks across
+// Mac/Win/Linux. No webfont load — these are all locally available.
 export const fonts = {
-  sans: '"Nunito", system-ui, -apple-system, sans-serif',
+  sans: '"Century Gothic", "Avenir Next", "Avenir", "URW Gothic", "Futura", system-ui, sans-serif',
 } as const
 
 export const fontSizes = {

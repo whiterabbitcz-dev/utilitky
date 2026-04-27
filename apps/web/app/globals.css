@@ -9,7 +9,9 @@ body {
 }
 
 body {
-  font-family: var(--font-nunito), "Nunito", system-ui, -apple-system, sans-serif;
+  font-family: "Century Gothic", "Avenir Next", "Avenir", "URW Gothic", "Futura", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

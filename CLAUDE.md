@@ -16,7 +16,7 @@ and brand voice. The agency itself lives at whiterabbit.cz.
 - pnpm workspaces (monorepo)
 - Next.js 15 with App Router, TypeScript strict
 - Tailwind CSS
-- Nunito from `next/font/google`, latin and latin-ext subsets
+- Century Gothic with system fallbacks (Avenir Next, URW Gothic, Futura, system-ui), no webfont load
 - shadcn/ui for primitive components
 - Cloudflare Pages for hosting (later)
 - Cloudflare Workers for server-side compute when needed (later)
@@ -43,8 +43,11 @@ Color palette:
 - Text: white `#FFFFFF`, gray `#888888`
 - Accent: WR yellow `#FFC107`, dark accent `#784213` (text on accent fills)
 
-Typography: Nunito only. Sentence case for all headings. CAPS labels with
-`tracking-caps` (0.1em letter-spacing) for micro-tags only.
+Typography: Century Gothic primary, with Avenir Next, Avenir, URW Gothic,
+Futura, system-ui as fallbacks (no webfont load, all locally available
+on Mac/Win/Linux). Body 14px, line-height 1.55. Sentence case for all
+headings. CAPS labels with `tracking-caps` (0.1em letter-spacing) for
+micro-tags. Eyebrow CAPS labels above hero use wider 0.22em.
 
 ## Non-negotiable copy and design rules
 
@@ -67,7 +70,7 @@ These rules come from the White Rabbit cookbook and are enforced on every change
    eBay, iPhone, adidas. Don't auto-capitalize at sentence start. Match the
    brand's official logo and materials.
 1. **Czech diacritics required in copy.** Files saved as UTF-8. Don't strip
-   háčky and čárky. Nunito has full Czech support via the latin-ext subset.
+   háčky and čárky. Century Gothic and all system fallbacks have full Czech support.
 1. **Black dominates** (~90% of viewport pixels). Yellow accent is signal,
    not decoration.
 1. **Yellow accent only on**: active states, numbers, CAPS labels, primary CTA

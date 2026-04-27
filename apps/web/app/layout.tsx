@@ -1,14 +1,6 @@
 import type { Metadata } from "next"
-import { Nunito } from "next/font/google"
 import { Toaster } from "sonner"
 import "./globals.css"
-
-const nunito = Nunito({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-nunito",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   title: "Nástroje | White Rabbit",
@@ -21,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="cs" className={nunito.variable}>
+    <html lang="cs">
       <body className="bg-bg text-white font-sans">
         {children}
         <Toaster

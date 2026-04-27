@@ -16,7 +16,15 @@ export default {
         "accent-dark": "#784213",
       },
       fontFamily: {
-        sans: ['"Nunito"', "system-ui", "sans-serif"],
+        sans: [
+          '"Century Gothic"',
+          '"Avenir Next"',
+          '"Avenir"',
+          '"URW Gothic"',
+          '"Futura"',
+          "system-ui",
+          "sans-serif",
+        ],
       },
       borderRadius: {
         lg: "12px",
