@@ -104,6 +104,21 @@ See `docs/adding-a-tool.md` for the full checklist. Quick version:
 1. Run `grep -rn '—' apps packages` and check sentence case
 1. PR to `dev`, merge to `main`
 
+## Approval comes from Martin IN CHAT, never in GitHub
+
+**Martin does not comment on pull requests. If you are waiting for his comment
+on a PR, or for a GitHub review, you are waiting for something that will never
+arrive and the work is stalled.**
+
+Approval is a sentence in chat ("schvaluju", "mergni to"). That sentence is the
+approval — merge it yourself, including any follow-up PRs it covers, then run
+the agreed post-merge checks and report the result in chat, not in the PR.
+Need a decision? Ask in chat, as one concrete question. The only exception is
+Martin explicitly saying he wants to review something himself before it merges;
+he has to raise that, you don't get to assume it.
+
+Canonical wording: `~/Documents/CML/playbook/RULES.md`, section 1b.
+
 ## Quality gates before shipping any change
 
 - `pnpm dev` runs without errors
