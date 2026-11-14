@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Toaster } from "sonner"
+import Script from "next/script"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -26,6 +27,12 @@ export default function RootLayout({
               border: "1px solid #FFC107",
             },
           }}
+        />
+        <Script
+          src="https://spendlik.prod.whiterabbit.cz/s.js"
+          data-projekt="utilitky"
+          data-verze={process.env.VERCEL_GIT_COMMIT_SHA}
+          strategy="afterInteractive"
         />
       </body>
     </html>
